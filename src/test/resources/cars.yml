@@ -1,0 +1,63 @@
+cars:
+  #
+  # Audi
+  #
+  - name: audi
+    farbe: blau
+    metallic: true
+    preis: 1_000_000_0000
+    extras:
+      - reifen
+      - lenkrad
+      - hupe
+    übersetzung:
+      1: eins
+      2: zwei
+      3: drei
+  #
+  # Porsche
+  #
+  - name: porsche
+    farbe: rot
+    preis: 1_000_000_0000_000_000
+    vierradantrieb: true
+  #
+  # Mercedes
+  #
+  - name: mercedes
+    farbe: hellblau
+    metallic: true
+    preis: 37_000_000_0000_000_000
+    extras:
+      - reifen
+      - lenkrad
+      - furzkissen
+    mapOfMaps:
+      map1:
+        a: A
+        b: B
+        c: C
+      map2:
+        x: X
+        y: Y
+        z: Z
+  #
+  # Toyota
+  #
+  - name: toyota
+    farbe: hellblau
+    metallic: true
+    preis: 37_000_000_0000_000_000
+    extras:
+      - reifen
+      - lenkrad
+      - hupe
+    übersetzung:
+      1: kucksi
+      2: bambam
+      3: tirili
+
+
+
+
+

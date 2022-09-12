@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+group 'de.go4medical'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.0"
+    implementation group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.13.0"
+    implementation group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.13.0"
+    implementation group: 'commons-io', name: 'commons-io', version: '2.5'
+    implementation group: "org.jetbrains", name: "annotations", version: "20.1.0"
+    implementation group: "org.junit.jupiter", name: "junit-jupiter", version: "5.8.1"
+
+    compileOnly group: "org.projectlombok", name: "lombok", version: "1.18.22"
+
+    annotationProcessor group: "org.projectlombok", name: "lombok", version: "1.18.22"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testImplementation group: "org.assertj", name: "assertj-core", version: "3.21.0"
+
+    testAnnotationProcessor group: "org.projectlombok", name: "lombok", version: "1.18.22"
+
+    testCompileOnly group: "org.projectlombok", name: "lombok", version: "1.18.22"
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+}
+
+test {
+    useJUnitPlatform()
+}

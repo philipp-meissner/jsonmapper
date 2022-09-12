@@ -1,0 +1,14 @@
+persons:
+  - firstName: Hans-Dietrich
+    lastName: Genscher
+    position: Außenminister
+  - firstName: Helmut
+    lastName: Kohl
+    position: Bundeskanzler
+translations:
+  de:
+    Außenminister: Außenminister
+    Bundeskanzler: Bundeskanzler
+  en:
+    Außenminister: Foreign Minister
+    Bundeskanzler: Chancellor
