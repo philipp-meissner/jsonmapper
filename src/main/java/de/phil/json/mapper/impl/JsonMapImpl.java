@@ -3,7 +3,7 @@
 package de.phil.json.mapper.impl;
 
 import de.phil.json.mapper.JsonMap;
-import de.phil.json.mapper.JsonMapper;
+import de.phil.json.mapper.JsonMapping;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class JsonMapImpl extends HashMap<String, Object> implements JsonMap {
      */
     @SuppressWarnings("unchecked")
     public JsonMapImpl(String json) {
-        this(JsonMapper.readJson(json, Map.class));
+        this(JsonMapping.readJson(json, Map.class));
     }
 
     /**

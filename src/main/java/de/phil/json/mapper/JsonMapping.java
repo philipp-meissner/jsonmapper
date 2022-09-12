@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Utility for dealing with JSON and YAML.
  */
-public class JsonMapper {
+public class JsonMapping {
 
     private static final YAMLFactory YAML_FACTORY = new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
                                                                      .enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)

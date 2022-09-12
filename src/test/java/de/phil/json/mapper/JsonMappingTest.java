@@ -13,9 +13,9 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for {@link JsonMapper}.
+ * Tests for {@link JsonMapping}.
  */
-class JsonMapperTest {
+class JsonMappingTest {
 
     private static final String NAME = "Hans Dietrich Genscher";
     private static final Instant MEMBER_SINCE = Instant.now();
@@ -23,21 +23,21 @@ class JsonMapperTest {
     @Test
     void canWriteAndReadString() {
         final Person person = new Person(NAME, MEMBER_SINCE);
-        final String json = JsonMapper.writeValueAsString(person);
-        assertThat(JsonMapper.readJson(json, Person.class)).isEqualTo(person);
+        final String json = JsonMapping.writeValueAsString(person);
+        assertThat(JsonMapping.readJson(json, Person.class)).isEqualTo(person);
     }
 
     @Test
     void canCopy() {
         final Person person = new Person(NAME, MEMBER_SINCE);
-        final JsonMap map = JsonMapper.writeValueAsMap(person);
-        assertThat(JsonMapper.copyValue(map, Person.class)).isEqualTo(person);
+        final JsonMap map = JsonMapping.writeValueAsMap(person);
+        assertThat(JsonMapping.copyValue(map, Person.class)).isEqualTo(person);
     }
 
     @Test
     void canWriteToSpecificMap() {
         final Person person = new Person(NAME, MEMBER_SINCE);
-        final MemberJsonMap map = JsonMapper.writeValueAsMap(person, MemberJsonMap.class);
+        final MemberJsonMap map = JsonMapping.writeValueAsMap(person, MemberJsonMap.class);
         assertThat(Instant.parse(map.getAsString(Person.Fields.memberSince))).isEqualTo(MEMBER_SINCE);
         assertThat(map.getMemberSince()).isEqualTo(MEMBER_SINCE);
     }
@@ -45,8 +45,8 @@ class JsonMapperTest {
     @Test
     void canReadFromSpecificMap() {
         final Person person = new Person(NAME, MEMBER_SINCE);
-        final String json = JsonMapper.writeValueAsString(person);
-        final MemberJsonMap map = JsonMapper.readJson(json, MemberJsonMap.class);
+        final String json = JsonMapping.writeValueAsString(person);
+        final MemberJsonMap map = JsonMapping.readJson(json, MemberJsonMap.class);
         assertThat(Instant.parse(map.getAsString(Person.Fields.memberSince))).isEqualTo(MEMBER_SINCE);
         assertThat(map.getMemberSince()).isEqualTo(MEMBER_SINCE);
     }
@@ -56,7 +56,7 @@ class JsonMapperTest {
     void canReadYaml() throws IOException {
         final InputStream yamlStream = getClass().getResourceAsStream("/person.yml");
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMapImpl jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMapImpl jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         final JsonList persons = jsonMap.getAsJsonList("persons");
         assertThat(persons.get(0).getAsString("lastName")).isEqualTo("Genscher");
     }
@@ -66,8 +66,8 @@ class JsonMapperTest {
     void canWriteYaml() throws IOException {
         final InputStream yamlStream = getClass().getResourceAsStream("/person.yml");
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMapImpl jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
-        final String asYaml = JsonMapper.writeValueAsYaml(jsonMap);
+        final JsonMapImpl jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
+        final String asYaml = JsonMapping.writeValueAsYaml(jsonMap);
         Assertions.assertThat(asYaml).isEqualTo(yaml);
     }
 
