@@ -1,4 +1,4 @@
-// Copyright (c) by go4medical.eu 2022.
+// Copyright (c) by Philipp Meißner 2022.
 
 package de.phil.json.mapper;
 
