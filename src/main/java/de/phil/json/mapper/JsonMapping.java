@@ -1,4 +1,4 @@
-// Copyright (c) by go4medical.eu 2022.
+// Copyright (c) by Philipp Meißner 2022.
 
 package de.phil.json.mapper;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Utility for dealing with JSON and YAML.
  */
-public class JsonMapper {
+public class JsonMapping {
 
     private static final YAMLFactory YAML_FACTORY = new YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
                                                                      .enable(YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR)
@@ -107,12 +107,12 @@ public class JsonMapper {
     }
 
     /**
-     * Writes data to {@link JsonMap}.
+     * Writes data to {@link Map}.
      *
      * @param data data.
-     * @param clazz Class of JsonMap.
-     * @param <T> JsonMap-type.
-     * @return JsonMap.
+     * @param clazz Class of Map.
+     * @param <T> Map-type.
+     * @return Map.
      */
     public static <T extends Map<String, Object>> T writeValueAsMap(Object data, Class<T> clazz) {
         return copyValue(data, clazz);

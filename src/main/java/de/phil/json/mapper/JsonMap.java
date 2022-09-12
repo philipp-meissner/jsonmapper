@@ -1,4 +1,4 @@
-// Copyright (c) by go4medical.eu 2022.
+// Copyright (c) by Philipp Meißner 2022.
 
 package de.phil.json.mapper;
 
@@ -173,7 +173,7 @@ public interface JsonMap extends Map<String, Object> {
         if (isOptimizedFor(clazz)) {
             return (T) get(key);
         }
-        TypeConverter.registerIfAbsent(clazz, value -> JsonMapper.copyValue(value, clazz));
+        TypeConverter.registerIfAbsent(clazz, value -> JsonMapping.copyValue(value, clazz));
         final T map = getAs(key, clazz);
         // store converted map so next time we can cast and don't need to convert
         put(key, map);
@@ -215,7 +215,7 @@ public interface JsonMap extends Map<String, Object> {
         }
         final List<?> currentValue = getAs(key, List.class);
         final JsonList listOfMaps = currentValue.stream()
-                                                .map(o -> JsonMapper.writeValueAsMap(o, JsonMapImpl.class))
+                                                .map(o -> JsonMapping.writeValueAsMap(o, JsonMapImpl.class))
                                                 .collect(Collectors.toCollection(JsonListImpl::new));
 
         // store converted list so next time we can cast and don't need to convert

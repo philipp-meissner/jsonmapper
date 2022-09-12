@@ -34,7 +34,7 @@ class JsonMapTest {
     @Test
     void canGetMap() {
         final Map<String, Person> personMap = Collections.singletonMap("person", new Person(NAME, MEMBER_SINCE));
-        final JsonMap jsonMap = JsonMapper.writeValueAsMap(personMap);
+        final JsonMap jsonMap = JsonMapping.writeValueAsMap(personMap);
         final JsonMap person = jsonMap.getAsMap("person");
         assertThat(person.getAsString(Person.Fields.name)).isEqualTo(NAME);
         assertThat(Instant.parse(person.getAsString(Person.Fields.memberSince))).isEqualTo(MEMBER_SINCE);
@@ -43,7 +43,7 @@ class JsonMapTest {
     @Test
     void entryInMapCanBeModified() {
         final Map<String, Person> personMap = Collections.singletonMap("person", new Person(NAME, MEMBER_SINCE));
-        final JsonMap jsonMap = JsonMapper.writeValueAsMap(personMap);
+        final JsonMap jsonMap = JsonMapping.writeValueAsMap(personMap);
         final JsonMap person = jsonMap.getAsMap("person");
         assertThat(person.getAsString(Person.Fields.name)).isEqualTo(NAME);
         person.put(Person.Fields.name, "Egon Müller");
@@ -53,7 +53,7 @@ class JsonMapTest {
     @Test
     void mapGottenTwiceIsTheSameMap() {
         final Map<String, Person> personMap = Collections.singletonMap("person", new Person(NAME, MEMBER_SINCE));
-        final JsonMap jsonMap = JsonMapper.writeValueAsMap(personMap);
+        final JsonMap jsonMap = JsonMapping.writeValueAsMap(personMap);
         final JsonMap person1 = jsonMap.getAsMap("person");
         final JsonMap person2 = jsonMap.getAsMap("person");
         assertThat(person2).isSameAs(person1);
@@ -64,7 +64,7 @@ class JsonMapTest {
     void entryInlistOfMapsCanBeModified() throws IOException {
         final InputStream yamlStream = getClass().getResourceAsStream("/person.yml");
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMap jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMap jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         final JsonList persons = jsonMap.getAsJsonList("persons");
         persons.get(0).put("x", "y");
         assertThat(jsonMap.getAsJsonList("persons").get(0).getAsString("x")).isEqualTo("y");
@@ -76,7 +76,7 @@ class JsonMapTest {
     void listEntryInlistOfMapsCanBeAdded() throws IOException {
         final InputStream yamlStream = getClass().getResourceAsStream("/person.yml");
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMapImpl jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMapImpl jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         final JsonList persons = jsonMap.getAsJsonList("persons", JsonMapImpl.class);
         persons.add(new JsonMapImpl(Map.of("x", "x")));
         assertThat(jsonMap.getAsJsonList("persons")).hasSize(3);
@@ -86,7 +86,7 @@ class JsonMapTest {
     @Test
     void canGetSpecificMap() {
         final Map<String, Person> personMap = Collections.singletonMap("person", new Person(NAME, MEMBER_SINCE));
-        final JsonMap jsonMap = JsonMapper.writeValueAsMap(personMap);
+        final JsonMap jsonMap = JsonMapping.writeValueAsMap(personMap);
         final MemberJsonMap person = jsonMap.getAsMap("person", MemberJsonMap.class);
         assertThat(person.getAsString(Person.Fields.name)).isEqualTo(NAME);
         assertThat(person.getName()).isEqualTo(NAME);
@@ -127,7 +127,7 @@ class JsonMapTest {
     void throwsExpectedExceptionOnIllegalConversion(Class<?> clazz) {
         assertThatThrownBy(() -> {
             final Map<String, Person> personMap = Collections.singletonMap("person", new Person(NAME, MEMBER_SINCE));
-            final JsonMap jsonMap = JsonMapper.writeValueAsMap(personMap);
+            final JsonMap jsonMap = JsonMapping.writeValueAsMap(personMap);
             jsonMap.getAs("person", clazz);
         }).isInstanceOf(TypeConversionException.class)
                   .hasMessageContaining(JsonMapImpl.class + " with value=")
@@ -336,7 +336,7 @@ class JsonMapTest {
         assertThat(yamlStream).isNotNull();
 
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMapImpl jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMapImpl jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         assertThat(jsonMap.isOptimizedFor(JsonMapImpl.class)).isTrue();
 
         final List<JsonMapImpl> carsByCast = (List<JsonMapImpl>) jsonMap.get("cars");
@@ -369,7 +369,7 @@ class JsonMapTest {
         final InputStream yamlStream = getClass().getResourceAsStream("/cars.yml");
         assertThat(yamlStream).isNotNull();
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMapImpl jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMapImpl jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         assertThatThrownBy(() -> jsonMap.optimize(JsonMap.class)).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -378,7 +378,7 @@ class JsonMapTest {
         final InputStream yamlStream = getClass().getResourceAsStream("/cars.yml");
         assertThat(yamlStream).isNotNull();
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMap jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMap jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         return jsonMap.getAsJsonList("cars");
     }
 }

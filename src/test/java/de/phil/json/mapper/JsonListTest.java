@@ -65,7 +65,7 @@ class JsonListTest {
         final InputStream yamlStream = getClass().getResourceAsStream("/cars.yml");
         assertThat(yamlStream).isNotNull();
         final String yaml = IOUtils.toString(yamlStream, StandardCharsets.UTF_8);
-        final JsonMap jsonMap = JsonMapper.readYaml(yaml, JsonMapImpl.class);
+        final JsonMap jsonMap = JsonMapping.readYaml(yaml, JsonMapImpl.class);
         return jsonMap.getAsJsonList("cars");
     }
 
