@@ -8,7 +8,7 @@ import de.phil.json.mapper.JsonMap;
 import java.util.ArrayList;
 
 /**
- * Default-Implementierung.
+ * Default-Implementation.
  */
 public class JsonListImpl extends ArrayList<JsonMap> implements JsonList {
 }

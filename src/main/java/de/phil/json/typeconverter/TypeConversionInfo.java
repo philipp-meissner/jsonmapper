@@ -3,7 +3,7 @@
 package de.phil.json.typeconverter;
 
 /**
- * Informationen, ob und wie ein Wert konvertiert werden kann.
+ * Informationen about if and how a value can be converted.
  */
 enum TypeConversionInfo {
     NULL,
@@ -12,11 +12,10 @@ enum TypeConversionInfo {
     IMPOSSIBLE;
 
     /**
-     * Liefert Informationen, ob und wie ein Wert konvertiert werden kann.
+     * Gets informationen about if and how a value can be converted.
      *
-     * @param value Zu konvertierender Wert.
-     * @param clazz Klasse, in die der Wert konvertiert werden soll.
-     * @param <T>   Typ der Klasse, in die der Wert konvertiert werden soll.
+     * @param value  Value to convert.
+     * @param clazz  Class to convert to.
      * @return Informationen zur Konvertierung.
      */
     public static <T> TypeConversionInfo of(Object value, Class<T> clazz) {

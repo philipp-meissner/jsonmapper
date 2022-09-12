@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 
 /**
- * Utility für den Umgang mit JSON und YAML.
+ * Utility for dealing with JSON and YAML.
  */
 public class JsonMapper {
 
@@ -40,12 +40,12 @@ public class JsonMapper {
     }
 
     /**
-     * Liest JSON-Daten ein und erzeugt daraus ein Objekt.
+     * Reads JSON and creates object.
      *
-     * @param json  Daten.
-     * @param clazz Zu erstellende Klasse.
-     * @param <T>   Typ der zu erstellenden Klasse.
-     * @return Objekt mit den Daten.
+     * @param json  JSON data
+     * @param clazz Class to instantiate.
+     * @param <T>   Type of class.
+     * @return Object containing JSON data.
      */
     @SneakyThrows(JsonProcessingException.class)
     public static <T> T readJson(String json, Class<T> clazz) {
@@ -53,27 +53,18 @@ public class JsonMapper {
     }
 
     /**
-     * Liest YAML-Daten ein und erzeugt daraus ein Objekt.
+     * Reads YAML and creates object.
      *
-     * @param yaml  Daten.
-     * @param clazz Zu erstellende Klasse.
-     * @param <T>   Typ der zu erstellenden Klasse.
-     * @return Objekt mit den Daten.
+     * @param yaml  YAML data
+     * @param clazz Class to instantiate.
+     * @param <T>   Type of class.
+     * @return Object containing YAML data.
      */
     @SneakyThrows(JsonProcessingException.class)
     public static <T> T readYaml(String yaml, Class<T> clazz) {
         return read(YAML_MAPPER, yaml, clazz);
     }
 
-    /**
-     * Liest einen String ein und erzeugt daraus ein Objekt.
-     *
-     * @param mapper Mapper für das Parsen der Daten.
-     * @param source  Daten.
-     * @param clazz Zu erstellende Klasse.
-     * @param <T>   Typ der zu erstellenden Klasse.
-     * @return Objekt mit den Daten.
-     */
     @SuppressWarnings("unchecked")
     private static <T> T read(@NotNull ObjectMapper mapper, String source, Class<T> clazz) throws JsonProcessingException {
         final T t = mapper.readValue(source, clazz);
@@ -84,10 +75,10 @@ public class JsonMapper {
     }
 
     /**
-     * Schreibt die gegebenen Daten in einen String.
+     * Writes object to JSON String.
      *
-     * @param data Daten.
-     * @return JSON-Format.
+     * @param data Data.
+     * @return JSON.
      */
     @SneakyThrows(JsonProcessingException.class)
     public static String writeValueAsString(Object data) {
@@ -95,10 +86,10 @@ public class JsonMapper {
     }
 
     /**
-     * Schreibt die gegebenen Daten in einen String.
+     * Writes object to YAML String.
      *
-     * @param data Daten.
-     * @return JSON-Format.
+     * @param data Data.
+     * @return YAML.
      */
     @SneakyThrows(JsonProcessingException.class)
     public static String writeValueAsYaml(Object data) {
@@ -106,9 +97,9 @@ public class JsonMapper {
     }
 
     /**
-     * Schreibt die gegebenen Daten in eine Map.
+     * Writes data to {@link JsonMap}.
      *
-     * @param data Daten.
+     * @param data data.
      * @return JsonMap.
      */
     public static JsonMap writeValueAsMap(Object data) {
@@ -116,24 +107,24 @@ public class JsonMapper {
     }
 
     /**
-     * Schreibt die gegebenen Daten in eine Map.
+     * Writes data to {@link JsonMap}.
      *
-     * @param data  Daten.
-     * @param clazz Zu erzeugende Klasse.
-     * @param <T>   Typ der zu erzeugenden Klasse.
-     * @return Spezialisierte JsonMap.
+     * @param data data.
+     * @param clazz Class of JsonMap.
+     * @param <T> JsonMap-type.
+     * @return JsonMap.
      */
     public static <T extends Map<String, Object>> T writeValueAsMap(Object data, Class<T> clazz) {
         return copyValue(data, clazz);
     }
 
     /**
-     * Kopiert das gegebene Objekt in ein Objekt der gegebenen Klasse.
+     * Copies one object to another.
      *
-     * @param data  Zu kopierendes Objekt.
-     * @param clazz Klasse, in die das Objekt kopiert werden soll.
-     * @param <T>   Typ des Objekts, in das die Daten kopiert werden sollen.
-     * @return Kopiertes Objekt.
+     * @param data  Object to copy.
+     * @param clazz Class to copy object to.
+     * @param <T>   Type of object to copy to.
+     * @return Copy.
      */
     public static <T> T copyValue(Object data, Class<T> clazz) {
         final String json = writeValueAsString(data);

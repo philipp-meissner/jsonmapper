@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * Test für die Klasse {@link JsonList}.
+ * Tests for {@link JsonList}.
  */
 class JsonListTest {
     private final JsonList cars = givenJsonMapWithCars();
@@ -24,9 +24,9 @@ class JsonListTest {
 
     @Test
     void throwsExceptionForGetByNonUniqueProperty() {
-        assertThatThrownBy(() -> cars.get("farbe", "hellblau"))
+        assertThatThrownBy(() -> cars.get("color", "pale blue"))
                   .isInstanceOf(IllegalArgumentException.class)
-                  .hasMessageContaining("key=farbe not unique");
+                  .hasMessageContaining("key=color not unique");
     }
 
     @Test
@@ -43,7 +43,7 @@ class JsonListTest {
 
     @Test
     void canGetByBooleanTrueProperty() {
-        assertThat(cars.get("vierradantrieb", true).getAsString("name")).isEqualTo("porsche");
+        assertThat(cars.get("4wd", true).getAsString("name")).isEqualTo("porsche");
     }
 
     @Test

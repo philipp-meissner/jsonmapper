@@ -13,7 +13,7 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test für die Klasse {@link JsonMapper}.
+ * Tests for {@link JsonMapper}.
  */
 class JsonMapperTest {
 

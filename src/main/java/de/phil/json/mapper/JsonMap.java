@@ -13,24 +13,24 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Map zum Umgang mit JSON-Formaten.
+ * Map to deal JSON format.
  */
 public interface JsonMap extends Map<String, Object> {
 
     /**
-     * Prüft, ob der Wert unter key true entspricht.
-     * @param key Schlüssel.
-     * @return Entspricht der Wert unter key dem Wert true.
+     * Checks whether value under key is true.
+     * @param key key.
+     * @return true if value matches condition.
      */
     default boolean is(String key) {
         return is(key, true);
     }
 
     /**
-     * Prüft, ob der Wert unter key der gegebenen Bedingung entspricht.
-     * @param key Schlüssel.
-     * @param condition Bedingung.
-     * @return Entspricht der Wert unter key der gegebenen Bedingung?
+     * Checks whether value under key matches condition.
+     * @param key key.
+     * @param condition condition.
+     * @return true if value matches condition.
      */
     default boolean is(String key, boolean condition) {
         final Object value = get(key);
@@ -40,41 +40,42 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * Vergleicht den Wert unter dem gegebenen key mit dem gegebenen Wert.
-     * @param key Schlüssel.
-     * @param value Wert, mit dem verglichen werden soll.
-     * @return Entspricht der Wert unter key dem gegebenen Wert?
+     * Compares value under given key with the given value.
+     * @param key key.
+     * @param value Value to compare to.
+     * @return true if value matches condition.
      */
     default boolean is(String key, Object value) {
         return is(key, value, true);
     }
 
     /**
-     * Vergleicht den Wert unter dem gegebenen key mit dem gegebenen Wert.
-     * @param key Schlüssel.
-     * @param value Wert, mit dem verglichen werden soll.
-     * @param condition Bedingung.
-     * @return Entspricht der Vergleichswert der gegebenen Bedingung?
+     * Compares value under given key with value.
+     * @param key key.
+     * @param value Value to compare to.
+     * @param condition condition.
+     * @return true if comparison matches condition.
      */
     default boolean is(String key, Object value, boolean condition) {
         return condition == Objects.equals(get(key), value);
     }
 
     /**
-     * Liest den Wert unter key als List aus und prüft, ob die Liste den gegebenen Wert enthält.
-     * @param key Schlüssel.
-     * @param valueInContainedList Gesuchter Wert.
-     * @return this.get(key),contains(valueInContainedList).
+     * Checks whether the list stored under given key contains given value.
+     * @param key key
+     * @param valueInContainedList list value in question.
+     * @return <code>this.get(key).contains(valueInContainedList)</code>.
      */
     default boolean listContains(String key, Object valueInContainedList) {
         return listContains(key, valueInContainedList, true);
     }
 
     /**
-     * Liest den Wert unter key als List aus und prüft, ob die Liste den gegebenen Wert enthält.
-     * @param key Schlüssel.
-     * @param valueInContainedList Gesuchter Wert.
-     * @return this.get(key),contains(valueInContainedList).
+     * Checks whether the list stored under given key contains given value.
+     * @param key key
+     * @param valueInContainedList list value in question.
+     * @param condition Bedingung.
+     * @return <code>condition==this.get(key).contains(valueInContainedList)</code>.
      */
     default boolean listContains(String key, Object valueInContainedList, boolean condition) {
         final List<?> list = getAs(key, List.class);
@@ -84,20 +85,21 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * Liest den Wert unter key als Map aus und prüft, ob in der Map der gesuchte Schlüssel enthalten ist.
-     * @param key Schlüssel.
-     * @param keyInContainedMap Gesuchter Schlüssel.
-     * @return this.get(key),containsKey(keyInContainedMap).
+     * Checks whether map under given key contains given key.
+     * @param key key.
+     * @param keyInContainedMap key in contained map.
+     * @return <code>this.get(key).containsKey(keyInContainedMap)</code>.
      */
     default boolean mapContainsKey(String key, String keyInContainedMap) {
         return mapContainsKey(key, keyInContainedMap, true);
     }
 
     /**
-     * Liest den Wert unter key als Map aus und prüft, ob in der Map der gesuchte Schlüssel enthalten ist.
-     * @param key Schlüssel.
-     * @param keyInContainedMap Gesuchter Schlüssel.
-     * @return this.get(key),containsKey(keyInContainedMap).
+     * Checks whether map under given key contains given key.
+     * @param key key.
+     * @param keyInContainedMap key in contained map.
+     * @param condition condition.
+     * @return <code>condition==this.get(key).containsKey(keyInContainedMap)</code>.
      */
     default boolean mapContainsKey(String key, String keyInContainedMap, boolean condition) {
         final JsonMap jsonMap = getAsMap(key);
@@ -105,20 +107,21 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * Liest den Wert unter key als Map aus und prüft, ob in der Map der gesuchte Wert enthalten ist.
-     * @param key Schlüssel.
-     * @param valueInContainedMap Gesuchter Wert.
-     * @return this.get(key),containsValue(valueInContainedMap).
+     * Checks whether map under given key contains given value.
+     * @param key key.
+     * @param valueInContainedMap value in contained map.
+     * @return <code>this.get(key).containsValue(valueInContainedMap)</code>.
      */
     default boolean mapContainsValue(String key, Object valueInContainedMap) {
         return mapContainsValue(key, valueInContainedMap, true);
     }
 
     /**
-     * Liest den Wert unter key als Map aus und prüft, ob in der Map der gesuchte Wert enthalten ist.
-     * @param key Schlüssel.
-     * @param valueInContainedMap Gesuchter Wert.
-     * @return this.get(key),containsValue(valueInContainedMap).
+     * Checks whether map under given key contains given value.
+     * @param key key.
+     * @param valueInContainedMap value in contained map.
+     * @param condition condition.
+     * @return <code>condition==this.get(key).containsValue(valueInContainedMap)</code>.
      */
     default boolean mapContainsValue(String key, Object valueInContainedMap, boolean condition) {
         final JsonMap jsonMap = getAsMap(key);
@@ -126,10 +129,11 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * Liest den Wert unter key als Map aus und liefert Wert, der in dieser Map unter dem keyInContainedMap gespeichert ist.
-     * @param key Schlüssel.
-     * @param keyInContainedMap Gesuchter Schlüssel.
-     * @return Wert unter this.get(key).get(keyInContainedMap)
+     * Reads value under given as a map and returns the value stored in sub-map.
+     * @param key key.
+     * @param keyInContainedMap key in contained map.
+     * @param <T> type of the value in the sub-map.
+     * @return <code>(T) this.get(key).get(keyInContainedMap)</code>)
      */
     @SuppressWarnings("unchecked")
     default <T> T getMapValue(String key, String keyInContainedMap) {
@@ -140,34 +144,29 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als {@link String}.
-     *
-     * @param key Schlüssel.
-     * @return Wert unter dem Schlüssel.
+     * Gets value under given key as a String.
+     * @param key key.
+     * @return value under key.
      */
     default String getAsString(String key) {
         return getAs(key, String.class);
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als {@link JsonMap}.
-     *
-     * @param key Schlüssel.
-     * @return Wert unter dem Schlüssel.
+     * Gets value under given key as a map.
+     * @param key key.
+     * @return value under key.
      */
-    @SuppressWarnings("UnnecessaryJavaDocLink")
     default JsonMap getAsMap(String key) {
         return getAsMap(key, JsonMapImpl.class);
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als spezialisierte {@link Map} vom gegebenen Typen.
-     * Ist für die gegebene KLasse noch kein Konverter registriert, so wird automatisch ein Konverter erstellt und registriert.
-     *
-     * @param key   Schlüssel.
-     * @param clazz Klasse des Rückgabetyps.
-     * @param <T>   Typ der Rückgabe.
-     * @return Wert unter dem Schlüssel.
+     * Gets value under given key as a map.
+     * @param key key.
+     * @param clazz Class of map.
+     * @param <T> map-type.
+     * @return value under key.
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     default <T extends Map> T getAsMap(String key, Class<T> clazz) {
@@ -176,40 +175,39 @@ public interface JsonMap extends Map<String, Object> {
         }
         TypeConverter.registerIfAbsent(clazz, value -> JsonMapper.copyValue(value, clazz));
         final T map = getAs(key, clazz);
-        // konvertierte Map speichern, damit sie beim nächsten Mal nicht wieder konvertiert werden muss
+        // store converted map so next time we can cast and don't need to convert
         put(key, map);
         return map;
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als gegebenen Typ.
-     *
-     * @param key   Schlüssel.
-     * @param clazz Gewünschter Rückgabetyp.
-     * @param <T>   Typ der Rückgabe.
-     * @return Wert unter dem Schlüssel.
+     * Gets value under given key as the given class.
+     * @param key key.
+     * @param clazz Class to convert to.
+     * @param <T> type.
+     * @return value under key.
      */
     default <T> T getAs(String key, Class<T> clazz) {
         return TypeConverter.convert(get(key), clazz);
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als {@link JsonList}.
+     * Gets value under given key as {@link JsonList}.
      *
-     * @param key Schlüssel.
-     * @return Wert unter dem Schlüssel.
+     * @param key key.
+     * @return value under key.
      */
     default JsonList getAsJsonList(String key) {
         return getAsJsonList(key, JsonMapImpl.class);
     }
 
     /**
-     * Liefert den Wert unter dem gegebenen Schlüssel als {@link JsonList}.
+     * Gets value under given key as {@link JsonList} of given map-class.
      *
-     * @param key   Schlüssel.
-     * @param clazz Gewünschter Type der Elemente.
-     * @param <T>   Typ der Elemente.
-     * @return Wert unter dem Schlüssel.
+     * @param key key.
+     * @param clazz Class of map-types.
+     * @param <T> map-type.
+     * @return value under key.
      */
     default <T extends JsonMap> JsonList getAsJsonList(String key, Class<T> clazz) {
         if (isOptimizedFor(clazz)) {
@@ -220,25 +218,24 @@ public interface JsonMap extends Map<String, Object> {
                                                 .map(o -> JsonMapper.writeValueAsMap(o, JsonMapImpl.class))
                                                 .collect(Collectors.toCollection(JsonListImpl::new));
 
-        // konvertierte List speichern, damit sie beim nächsten Mal nicht wieder konvertiert werden muss
+        // store converted list so next time we can cast and don't need to convert
         put(key, listOfMaps);
         return listOfMaps;
     }
 
     /**
-     * Setzen, dass die JsonMap für eine bestimmte Map-Implementierung optimiert wurde.
-     * Optimierung erlaubt Type-Casts statt konvertierungen.
+     * Sets the class map is optimized for.
      *
-     * @param clazz Klasse, für die die JsonMap optimiert wurde.
+     * @param clazz Class for optimization.
      */
     default void setOptimizedFor(Class<? extends JsonMap> clazz) {
     }
 
     /**
-     * Prüfen, ob di JsonMap für eine bestimmte Map-Implementierung optimiert wurde.
-     * @param clazz Klasse fü die auf Optimierung geprüft werden soll.
+     * Checks whether map is optimized for given class.
+     * @param clazz Class for optimization.
      *
-     * @return JsonMap wurde für die gegebene Klasse optimiert?
+     * @return true if map is optimized for the given class.
      */
     @SuppressWarnings("rawtypes")
     default boolean isOptimizedFor(Class<? extends Map> clazz){
@@ -246,8 +243,8 @@ public interface JsonMap extends Map<String, Object> {
     }
 
     /**
-     * JsonMap optimieren.
-     * @param clazz Klasse, für die die JsonMap optimiert werden soll.
+     * Optimize map. Optimization allows class-casts instead of transformations of map- and list-types.
+     * @param clazz Class for optimization.
      */
     default void optimize(@NotNull Class<? extends JsonMap> clazz) {
         if (clazz.isInterface()) {

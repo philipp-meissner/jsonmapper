@@ -10,18 +10,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Default-Implementierung.
+ * Default-Implementation.
  */
 @NoArgsConstructor
 public class JsonMapImpl extends HashMap<String, Object> implements JsonMap {
 
+    /**
+     * Class that this map is optimized for.
+     */
     @SuppressWarnings("rawtypes")
     private Class<? extends Map> optimizedForClass;
 
     /**
-     * Erzeugt eine neue Map aus dem gegebenen JSON-String.
+     * Creates new map from JSON-String.
      *
-     * @param json JSON-String.
+     * @param json JSON.
      */
     @SuppressWarnings("unchecked")
     public JsonMapImpl(String json) {
@@ -29,7 +32,7 @@ public class JsonMapImpl extends HashMap<String, Object> implements JsonMap {
     }
 
     /**
-     * Erzeugt eine neue Map mit den gegebenen Werten.
+     * Creates new map from given map.
      *
      * @param values Map.
      */

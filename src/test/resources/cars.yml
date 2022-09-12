@@ -3,14 +3,14 @@ cars:
   # Audi
   #
   - name: audi
-    farbe: blau
+    color: blue
     metallic: true
-    preis: 1_000_000_0000
+    price: 1_000_000_0000
     extras:
-      - reifen
-      - lenkrad
-      - hupe
-    übersetzung:
+      - tire
+      - steering wheel
+      - horn
+    translation:
       1: eins
       2: zwei
       3: drei
@@ -18,19 +18,19 @@ cars:
   # Porsche
   #
   - name: porsche
-    farbe: rot
-    preis: 1_000_000_0000_000_000
-    vierradantrieb: true
+    color: red
+    price: 1_000_000_0000_000_000
+    4wd: true
   #
   # Mercedes
   #
   - name: mercedes
-    farbe: hellblau
+    color: pale blue
     metallic: true
-    preis: 37_000_000_0000_000_000
+    price: 37_000_000_0000_000_000
     extras:
-      - reifen
-      - lenkrad
+      - tire
+      - steering wheel
       - furzkissen
     mapOfMaps:
       map1:
@@ -45,17 +45,17 @@ cars:
   # Toyota
   #
   - name: toyota
-    farbe: hellblau
+    color: pale blue
     metallic: true
-    preis: 37_000_000_0000_000_000
+    price: 37_000_000_0000_000_000
     extras:
-      - reifen
-      - lenkrad
-      - hupe
-    übersetzung:
-      1: kucksi
-      2: bambam
-      3: tirili
+      - tire
+      - steering wheel
+      - horn
+    translation:
+      1: nonsense
+      2: more nonsense
+      3: yet more nonsense
 
 
 

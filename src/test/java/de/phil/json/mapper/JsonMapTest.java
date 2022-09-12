@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * Test für das Interface {@link JsonMap}.
+ * Tests for {@link JsonMap}.
  */
 class JsonMapTest {
     private static final String NAME = "Hans Dietrich Genscher";
@@ -229,49 +229,49 @@ class JsonMapTest {
 
     @Test
     void mapValueContainsKey() {
-        assertThat(cars.get(0).mapContainsKey("übersetzung", "1")).isTrue();
+        assertThat(cars.get(0).mapContainsKey("translation", "1")).isTrue();
     }
 
     @Test
     void mapValueContainsKeyCondition() {
-        assertThat(cars.get(0).mapContainsKey("übersetzung", "1z", false)).isTrue();
-        assertThat(cars.get(0).mapContainsKey("gibt es nicht", "1z", false)).isTrue();
+        assertThat(cars.get(0).mapContainsKey("translation", "1z", false)).isTrue();
+        assertThat(cars.get(0).mapContainsKey("not a valid key", "1z", false)).isTrue();
     }
 
     @Test
     void mapValueDoesntContainKey() {
-        assertThat(cars.get(0).mapContainsKey("übersetzung", "4")).isFalse();
+        assertThat(cars.get(0).mapContainsKey("translation", "4")).isFalse();
     }
 
     @Test
     void missingMapDoesntContainKey() {
-        assertThat(cars.get(0).mapContainsKey("diese map gibt es nicht", "1")).isFalse();
+        assertThat(cars.get(0).mapContainsKey("not a valid key", "1")).isFalse();
     }
 
     @Test
     void mapValueContainsValue() {
-        assertThat(cars.get(0).mapContainsValue("übersetzung", "eins")).isTrue();
+        assertThat(cars.get(0).mapContainsValue("translation", "eins")).isTrue();
     }
 
     @Test
     void mapValueContainsValueCondition() {
-        assertThat(cars.get(0).mapContainsValue("übersetzung", "bingo", false)).isTrue();
-        assertThat(cars.get(0).mapContainsValue("gibt es nicht", "bingo", false)).isTrue();
+        assertThat(cars.get(0).mapContainsValue("translation", "bingo", false)).isTrue();
+        assertThat(cars.get(0).mapContainsValue("not a valid key", "bingo", false)).isTrue();
     }
 
     @Test
     void mapValueDoesntContainValue() {
-        assertThat(cars.get(0).mapContainsValue("übersetzung", "vier")).isFalse();
+        assertThat(cars.get(0).mapContainsValue("translation", "vier")).isFalse();
     }
 
     @Test
     void mapValueCanBeGotten() {
-        assertThat((String) cars.get(0).getMapValue("übersetzung", "1")).isEqualTo("eins");
+        assertThat((String) cars.get(0).getMapValue("translation", "1")).isEqualTo("eins");
     }
 
     @Test
     void notExistingMapValueCantBeGotten() {
-        assertThat((String) cars.get(0).getMapValue("übersetzung", "4")).isNull();
+        assertThat((String) cars.get(0).getMapValue("translation", "4")).isNull();
     }
 
     @Test
@@ -281,12 +281,12 @@ class JsonMapTest {
 
     @Test
     void missingMapDoesntContainValue() {
-        assertThat(cars.get(0).mapContainsValue("diese map gibt es nicht", "eins")).isFalse();
+        assertThat(cars.get(0).mapContainsValue("not a valid key", "eins")).isFalse();
     }
 
     @Test
     void listValueContains() {
-        assertThat(cars.get(0).listContains("extras", "reifen")).isTrue();
+        assertThat(cars.get(0).listContains("extras", "tire")).isTrue();
     }
 
     @Test
@@ -296,28 +296,28 @@ class JsonMapTest {
 
     @Test
     void listValueDoesntContain() {
-        assertThat(cars.get(0).listContains("extras", "spiegel")).isFalse();
+        assertThat(cars.get(0).listContains("extras", "mirror")).isFalse();
     }
 
     @Test
     void missingListValueDoesntContain() {
-        assertThat(cars.get(0).listContains("diese liste gibt es nicht", "reifen")).isFalse();
+        assertThat(cars.get(0).listContains("not a valid key", "tire")).isFalse();
     }
 
     @Test
     void jsonMapCanBeFiltered() {
         final List<JsonMap> filteredCars = cars.stream()
-                                               .filter(jm -> jm.listContains("extras", "reifen"))
-                                               .filter(jm -> jm.mapContainsKey("übersetzung", "1"))
-                                               .filter(jm -> jm.mapContainsValue("übersetzung", "kucksi"))
+                                               .filter(jm -> jm.listContains("extras", "tire"))
+                                               .filter(jm -> jm.mapContainsKey("translation", "1"))
+                                               .filter(jm -> jm.mapContainsValue("translation", "nonsense"))
                                                .filter(jm -> jm.is("metallic"))
-                                               .filter(jm -> jm.is("farbe", "hellblau"))
-                                               .filter(jm -> jm.getAs("extras", List.class).contains("hupe"))
+                                               .filter(jm -> jm.is("color", "pale blue"))
+                                               .filter(jm -> jm.getAs("extras", List.class).contains("horn"))
                                                .collect(Collectors.toList());
 
         assertThat(filteredCars).hasSize(1);
         assertThat(filteredCars.get(0).getAsString("name")).isEqualTo("toyota");
-        assertThat(filteredCars.get(0).getAs("preis", BigInteger.class)).isEqualTo(new BigInteger("370000000000000000"));
+        assertThat(filteredCars.get(0).getAs("price", BigInteger.class)).isEqualTo(new BigInteger("370000000000000000"));
     }
 
     @Test

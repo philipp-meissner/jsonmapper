@@ -6,30 +6,30 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * Liste von {@link JsonMap}s.
+ * List of {@link JsonMap}s.
  */
 public interface JsonList extends List<JsonMap> {
 
     /**
-     * Liefert die Map, in der der Wert unter key dem gegebenen Wert entspricht.
+     * Returns the map that contains the given value under the given key.
      *
-     * @param key Schlüssel.
-     * @param value Wert.
-     * @param <T> Typ des Werts.
-     * @return Map, die den Bedingungen entspricht.
-     * @throws IllegalArgumentException kein passender Wert gefunden oder Wert nicht eindeutig.
+     * @param key Key.
+     * @param value Value to find.
+     * @param <T> Type of value.
+     * @return Map matching the condition.
+     * @throws IllegalArgumentException no or multiple matching values found.
      */
     default <T> JsonMap get(String key, T value) throws IllegalArgumentException {
         return get(key, stream().filter(jm -> jm.is(key, value, true)));
     }
 
     /**
-     * Liefert die Map, in der der Bool'sche Wert unter key der gegebenen Bedingung entspricht.
+     * Returns the map that contains the given value under the given key.
      *
-     * @param key       Schlüssel, unter dem der Bool'sche Wert abgelegt ist.
-     * @param condition Bedingung, der der Wert entsprechen muss.
-     * @return Stream der Maps, die den Bedingungen entsprechen.
-     * @throws IllegalArgumentException kein passender Wert gefunden oder Wert nicht eindeutig.
+     * @param key  Key to find the the boolean condition under.
+     * @param condition Value to find.
+     * @return Map matching the condition.
+     * @throws IllegalArgumentException no or multiple matching values found.
      */
     default JsonMap get(String key, boolean condition) throws IllegalArgumentException {
         return get(key, stream().filter(jm -> jm.is(key, condition)));

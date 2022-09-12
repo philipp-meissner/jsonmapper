@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * Test für die Klasse {@link TypeConverter}.
+ * Tests for class {@link TypeConverter}.
  */
 class TypeConverterTest {
 

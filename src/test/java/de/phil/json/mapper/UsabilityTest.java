@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Zeigt die Verwendung von {@link JsonMap} und {@link JsonList}.
+ * Shows usage of {@link JsonMap} und {@link JsonList}.
  */
 public class UsabilityTest {
     private final JsonList cars = givenJsonMapWithCars();
@@ -21,7 +21,7 @@ public class UsabilityTest {
     @Test
     void listOperations() {
         System.out.println(cars.get("name", "mercedes"));
-        System.out.println(cars.get("vierradantrieb", true));
+        System.out.println(cars.get("4wd", true));
         System.out.println(cars.get("metallic", false));
     }
 
@@ -30,11 +30,11 @@ public class UsabilityTest {
         cars.stream()
             // is
             .filter(jm -> jm.is("metallic"))
-            .filter(jm -> jm.is("farbe", "hellblau"))
-            .filter(jm -> jm.is("farbe", "rot", false))
+            .filter(jm -> jm.is("color", "pale blue"))
+            .filter(jm -> jm.is("color", "red", false))
             // listContains
             .filter(jm -> jm.listContains("extras", "furzkissen"))
-            .filter(jm -> jm.listContains("extras", "hupe", false))
+            .filter(jm -> jm.listContains("extras", "horn", false))
             // getAsMap
             .filter(jm -> jm.getAsMap("mapOfMaps").containsKey("map1"))
             .filter(jm -> jm.getAsMap("mapOfMaps").getAsMap("map1").containsValue("C"))
@@ -49,7 +49,7 @@ public class UsabilityTest {
             .filter(jm -> jm.<JsonMap>getMapValue("mapOfMaps", "map1").containsKey("a"))
             .filter(jm -> jm.getAsMap("mapOfMaps").<String>getMapValue("map1", "b").equals("B"))
             // getAs
-            .filter(jm -> jm.getAs("preis", Long.class) >= 10_000_000_000L)
+            .filter(jm -> jm.getAs("price", Long.class) >= 10_000_000_000L)
             .forEach(System.out::println);
     }
 
@@ -64,16 +64,16 @@ public class UsabilityTest {
                 return metallic != null && metallic.equals(true);
             })
 
-            .filter(jm -> jm.is("farbe", "hellblau"))
+            .filter(jm -> jm.is("color", "pale blue"))
             .filter(jm -> {
-                final Object farbe = jm.get("farbe");
-                return farbe != null && farbe.equals("hellblau");
+                final Object color = jm.get("color");
+                return color != null && color.equals("pale blue");
             })
 
-            .filter(jm -> jm.is("farbe", "rot", false))
+            .filter(jm -> jm.is("color", "red", false))
             .filter(jm -> {
-                final Object farbe1 = jm.get("farbe");
-                return farbe1 == null || !farbe1.equals("rot");
+                final Object farbe1 = jm.get("color");
+                return farbe1 == null || !farbe1.equals("red");
             })
 
             // listContains
@@ -83,10 +83,10 @@ public class UsabilityTest {
                 return extras1 != null && ((List) extras1).contains("furzkissen");
             })
 
-            .filter(jm -> jm.listContains("extras", "hupe", false))
+            .filter(jm -> jm.listContains("extras", "horn", false))
             .filter(jm -> {
                 final Object extras = jm.get("extras");
-                return extras == null || !((List) extras).contains("hupe");
+                return extras == null || !((List) extras).contains("horn");
             })
 
             // getAsMap
@@ -111,7 +111,7 @@ public class UsabilityTest {
                 return mapOfMaps1 == null || !((Map) mapOfMaps1).containsKey("map3");
             })
 
-            // mapContainsValue (analog zu mapContainsKey)
+            // mapContainsValue (see mapContainsKey)
             .filter(jm -> jm.getAsMap("mapOfMaps").mapContainsValue("map2", "X"))
             .filter(jm -> jm.getAsMap("mapOfMaps").getAsMap("map2").containsValue("X"))
             .filter(jm -> jm.getAsMap("mapOfMaps").mapContainsValue("map2", "U", false))
@@ -132,10 +132,10 @@ public class UsabilityTest {
             })
 
             // getAs
-            .filter(jm -> jm.getAs("preis", Long.class) >= 10_000_000_000L)
+            .filter(jm -> jm.getAs("price", Long.class) >= 10_000_000_000L)
             .filter(jm -> {
-                final Object preis = jm.get("preis");
-                return preis != null && ((Long) preis) >= 10_000_000_000L;
+                final Object price = jm.get("price");
+                return price != null && ((Long) price) >= 10_000_000_000L;
             })
 
             .forEach(System.out::println);
@@ -144,7 +144,7 @@ public class UsabilityTest {
     @Test
     void automaticEnumConversion() {
 
-        // Auch für lokale Enums muss nicht explizit ein Konverter registriert werden
+        // No need to register converter for enums
 
         enum ABC {
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 /**
- * Map für Typ-Konverter.
+ * Map for Type Converters.
  */
 class TypeConverterMap extends HashMap<Class<?>, Function<Object, ?>> {
     @Override

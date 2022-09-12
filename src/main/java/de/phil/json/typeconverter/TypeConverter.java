@@ -10,17 +10,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Konvertiert Typen.
+ * Converts types.
  */
 public class TypeConverter {
     private static final TypeConverterMap CONVERTERS = new TypeConverterMap();
     private static final TypeConverterMap DEFAULT_CONVERTERS = new TypeConverterMap();
 
     static {
-        // NB: Für enums muss i.d.R. nicht explizit ein Konverter registriert werden.
-        // Die ConverterMap erstellt bei Bedarf generische Konverter für enums
+        // NB: usually no explicit registration for enums needed as they are automatically created and registered if needed
 
-        // Standard-Konverter
+        // standard converters
         registerDefault(String.class, String::valueOf);
         registerDefault(Boolean.class, value -> {
             if (value instanceof String s) {
@@ -83,7 +82,7 @@ public class TypeConverter {
             throw new TypeConversionException(value, BigDecimal.class);
         });
 
-        // Datums-Konverter
+        // date converters
         registerDefault(LocalDate.class, value -> LocalDate.parse((String) value));
         registerDefault(LocalTime.class, value -> LocalTime.parse((String) value));
         registerDefault(OffsetTime.class, value -> OffsetTime.parse((String) value));
@@ -93,73 +92,73 @@ public class TypeConverter {
     }
 
     /**
-     * Registriert einen Konverter.
+     * Registers a default converter.
      *
-     * @param transformer Konverter.
+     * @param converter Converter.
      */
-    private static <T> void registerDefault(Class<T> clazz, Function<Object, T> transformer) {
-        DEFAULT_CONVERTERS.put(clazz, transformer);
-        CONVERTERS.put(clazz, transformer);
+    private static <T> void registerDefault(Class<T> clazz, Function<Object, T> converter) {
+        DEFAULT_CONVERTERS.put(clazz, converter);
+        CONVERTERS.put(clazz, converter);
     }
 
     /**
-     * Registriert einen Konverter.
-     *
-     * @param transformer Konverter.
+     * Registers a converter.
+     * @param clazz  Class to convert to.
+     * @param converter  Converter.
+     * @param <T> Typ des Konverters.
      */
-    public static <T> void register(Class<T> clazz, Function<Object, T> transformer) {
-        CONVERTERS.put(clazz, transformer);
+    public static <T> void register(Class<T> clazz, Function<Object, T> converter) {
+        CONVERTERS.put(clazz, converter);
     }
 
     /**
-     * Deregistriert einen Konverter.
-     *
-     * @param clazz Klasse des Konverters.
+     * Unregisters a converter.
+     * @param clazz  Converter class.
      */
     public static void unregister(Class<?> clazz) {
         CONVERTERS.remove(clazz);
     }
 
     /**
-     * Registriert einen Konverter, wenn dieser noch nicht registriert ist.
-     * @param key   Klasse, in die konvertiert werden kann.
-     * @param mappingFunction Funktion zum Konvertieren.
+     * Registers a converter if absent.
+     * @param clazz  Class to convert to.
+     * @param converter  Converter.
      */
-    public static void registerIfAbsent(Class<?> key, Function<Object, ?> mappingFunction) {
-        CONVERTERS.computeIfAbsent(key, x -> mappingFunction);
+    public static void registerIfAbsent(Class<?> clazz, Function<Object, ?> converter) {
+        CONVERTERS.computeIfAbsent(clazz, x -> converter);
     }
 
     /**
-     * Liefert die Klassen, für die Default-Konverter registriert sind.
-     * @return Klassen, für die Default-Konverter registriert sind.
+     * Gets registrations of default converters.
+     * @return classes of default converters.
      */
     static Set<Class<?>> getDefaultRegistrations() {
         return DEFAULT_CONVERTERS.keySet();
     }
 
     /**
-     * Liefert die Klassen, für die Konverter registriert sind.
-     * @return Klassen, für die Konverter registriert sind.
+     * Gets registrations of converters.
+     * @return classes of converters.
      */
     public static Set<Class<?>> getRegistrations() {
         return CONVERTERS.keySet();
     }
 
     /**
-     * Prüft, ob in die gegebene Klasse konvertiert werden kann.
-     * @param clazz Klasse, in die konvertiert werden soll.
-     * @return Kann in die Klasse konvertiert werden?
+     * Checks whether conversion is possible.
+     * @param clazz  Class to convert to.
+     * @return true if conversion is possible.
      */
     public static boolean canConvertTo(Class<?> clazz) {
         return CONVERTERS.containsKey(clazz) || ((clazz != null) && clazz.isEnum());
     }
 
     /**
-     * Konvertiert den gegebenen Wert in die gegebene Klasse.
-     * @param value     Zu konvertierender Wert.
-     * @param toClass   Klasse des gewünschten Types.
-     * @param <T>       Gewünschter Typ.
-     * @return Konvertierter Wert.
+     * Converts a value into the given class.
+     * @param value    Value to convert.
+     * @param toClass  Class to convert to.
+     * @param <T>      Type of converted class.
+     * @return Converted value.
      */
     @SuppressWarnings("unchecked")
     public static <T> T convert(Object value, Class<T> toClass) {
