@@ -107,12 +107,12 @@ public class JsonMapping {
     }
 
     /**
-     * Writes data to {@link JsonMap}.
+     * Writes data to {@link Map}.
      *
      * @param data data.
-     * @param clazz Class of JsonMap.
-     * @param <T> JsonMap-type.
-     * @return JsonMap.
+     * @param clazz Class of Map.
+     * @param <T> Map-type.
+     * @return Map.
      */
     public static <T extends Map<String, Object>> T writeValueAsMap(Object data, Class<T> clazz) {
         return copyValue(data, clazz);
