@@ -166,12 +166,14 @@ public class TypeConverter {
             case NULL -> null;
             case CAST -> (T) value;
             case CONVERT -> (T) CONVERTERS.get(toClass).apply(value);
-            default -> throw new TypeConversionException("Converter missing: ", value, toClass,
-                                                         ". Converters are registered for " + TypeConverter.getRegistrations()
-                                                                                                           .stream()
-                                                                                                           .map(Class::getSimpleName)
-                                                                                                           .sorted()
-                                                                                                           .collect(Collectors.joining(", ")));
+            default -> {
+                final String registrations = TypeConverter.getRegistrations()
+                                                          .stream()
+                                                          .map(Class::getSimpleName)
+                                                          .sorted()
+                                                          .collect(Collectors.joining(", "));
+                throw new TypeConversionException("Converter missing: ", value, toClass, ". Converters are registered for " + registrations);
+            }
         };
     }
 
